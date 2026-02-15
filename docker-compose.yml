@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-telegram_osint}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+
+  orchestrator_api:
+    build: ./orchestrator_api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./orchestrator_api:/app
+      - ./rules:/app/rules
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-telegram_osint}
+      - REDIS_URL=redis://redis:6379/0
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - db
+      - redis
+
+  worker:
+    build: ./orchestrator_api
+    command: celery -A worker.celery_app worker --loglevel=info
+    volumes:
+      - ./orchestrator_api:/app
+      - ./rules:/app/rules
+      - ./agents:/app/agents
+      - ./reporting:/app/reporting
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-telegram_osint}
+      - REDIS_URL=redis://redis:6379/0
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - db
+      - redis
+
+  collector:
+    build: ./collector_telegram
+    volumes:
+      - ./collector_telegram:/app
+      - ./data:/app/data
+    environment:
+      - TG_API_ID=${TG_API_ID}
+      - TG_API_HASH=${TG_API_HASH}
+      - ORCHESTRATOR_URL=http://orchestrator_api:8000
+    depends_on:
+      - orchestrator_api
+
+volumes:
+  postgres_data:

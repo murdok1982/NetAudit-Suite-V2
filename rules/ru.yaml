@@ -1,0 +1,24 @@
+# data/ru.yaml
+language: "ru"
+version: "3.0"
+topic_buckets:
+  - category: "violent_extremism"
+    weight: 2.6
+  - category: "weapons_trafficking"
+    weight: 2.2
+  - category: "drugs_trafficking"
+    weight: 2.0
+emoji_indicators:
+  weight: 0.8
+  items: ["💣","🧨","🔫","⚔️","🏴","☠️"]
+euphemisms:
+  weight: 1.3
+  items: ["товар","посылка","подарок","вечеринка","лекарство","снег","конфеты"]
+keywords_medium_risk:
+  weight: 2.0
+  items: ["бомба","взрывчатка","оружие","атака","шпионаж","саботаж"]
+behavioral_patterns:
+  weight: 2.0
+  intent_markers: ["я сделаю","мы планируем","скоро"]
+  recruitment_markers: ["в личку","присоединяйся","только серьезные"]
+  logistics_markers: ["встреча","адрес","доставка","время"]

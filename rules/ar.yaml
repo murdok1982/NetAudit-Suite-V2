@@ -1,0 +1,137 @@
+language: "ar"
+version: "3.0"
+
+normalization:
+  remove_diacritics: true
+  normalize_alef: true
+  normalize_hamza: true
+  normalize_teh_marbuta: true
+  normalize_kashida: true
+
+topic_buckets:
+  - category: "violent_extremism"
+    weight: 2.6
+  - category: "terrorism_operational_intent"
+    weight: 3.0
+  - category: "weapons_trafficking"
+    weight: 2.2
+  - category: "drugs_trafficking"
+    weight: 2.0
+  - category: "sabotage_infrastructure"
+    weight: 2.4
+  - category: "espionage"
+    weight: 1.8
+
+emoji_indicators:
+  weight: 0.8
+  items:
+    - "💣"
+    - "🧨"
+    - "🔫"
+    - "🗡️"
+    - "⚔️"
+    - "🏴"
+    - "🏴‍☠️"
+    - "☠️"
+    - "🩸"
+
+# Eufemismos típicos para evadir filtros (genéricos, orientados a detección)
+euphemisms:
+  weight: 1.6
+  items:
+    - "عرس"            # “boda” usado a veces como metáfora/evento
+    - "حفلة"           # “fiesta”
+    - "هدية"           # “regalo”
+    - "طرد"            # “paquete”
+    - "بضاعة"          # “mercancía”
+    - "شغل"            # “trabajo”
+    - "الشيء"          # “la cosa”
+    - "الدواء"         # “medicina” (para drogas)
+    - "الثلج"          # “nieve” (slang drogas)
+    - "حلوى"           # “caramelos” (slang)
+
+slang_regional:
+  weight: 1.7
+  maghreb:
+    - "حشيش"
+    - "كيف"           # cannabis (magreb)
+    - "قرقوبي"        # pastillas (slang)
+    - "الحرقة"        # migración irregular (puede correlacionar redes)
+  levant:
+    - "كبتاغون"
+    - "شبيحة"         # contexto milicia/redes
+  gulf:
+    - "حبة"
+    - "شبو"           # meth (slang)
+    - "مروج"          # dealer
+
+phrases_high_risk:
+  weight: 3.0
+  items:
+    - "الموت للكفار"
+    - "تفجير"
+    - "زرع عبوة"
+    - "حزام ناسف"
+    - "خلية نائمة"
+    - "استهداف مدنيين"
+    - "اغتيال"
+    - "تهريب سلاح"
+    - "تزوير جوازات"
+
+keywords_medium_risk:
+  weight: 2.0
+  items:
+    - "قنبلة"
+    - "متفجرات"
+    - "سلاح"
+    - "ذخيرة"
+    - "مخدرات"
+    - "هجوم"
+    - "تجسس"
+    - "تسريب"
+    - "تخريب"
+
+regex_indicators:
+  weight: 2.2
+  items:
+    - "(جهاد|جهادي|المجاهدين)"
+    - "(داعش|الدولة\\s?الاسلامية)"
+    - "(تفجير|فجر|ينفجر)"
+    - "(تهريب|مهرب|شحنة)"
+    - "(اغتيال|اغتال|مغتال)"
+    - "(خلية\\s?نائمة)"
+    - "(كبتاغون|قرقوبي|شبو)"
+
+arabizi:
+  weight: 1.8
+  # patrones típicos de transliteración + símbolos
+  patterns:
+    - "j(i|1)h(a|@)d"
+    - "d(a|@)(3|a)sh"
+    - "kh(5|a)l(i|1)f(a|@)"
+    - "t(a|@)f(j|g)(i|1)r"
+  digit_map:
+    "2": "ء"
+    "3": "ع"
+    "5": "خ"
+    "6": "ط"
+    "7": "ح"
+    "8": "ق"
+    "9": "ص"
+
+behavioral_patterns:
+  weight: 2.4
+  intent_markers:
+    - "سأقوم ب"
+    - "نخطط ل"
+    - "قريبا"
+    - "حان الوقت"
+  recruitment_markers:
+    - "من يريد الانضمام"
+    - "التواصل خاص"
+    - "للمهتمين فقط"
+  logistics_markers:
+    - "التسليم"
+    - "مكان اللقاء"
+    - "عنوان"
+    - "وقت التنفيذ"
