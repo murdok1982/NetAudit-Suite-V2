@@ -1,23 +1,6 @@
-# Environment variables
-.env
-.env.example
-
-# Python
+```text
+config.py
 __pycache__/
-*.py[cod]
-*$py.class
-venv/
-.venv/
-
-# Data & Sessions
-data/
-collector_session.session
-collector_session.session-journal
-
-# IDEs
-.vscode/
-.idea/
-
-# OS
+*.pyc
 .DS_Store
-Thumbs.db
+auditorias/

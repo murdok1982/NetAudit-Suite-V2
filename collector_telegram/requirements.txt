@@ -1,5 +1,0 @@
-telethon
-httpx
-pydantic
-python-dotenv
-cryptography

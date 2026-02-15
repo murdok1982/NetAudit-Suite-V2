@@ -1,82 +1,76 @@
-# 🛡️ Telegram OSINT/CTI Platform
-### Developed by **[MuRDoK-1982-](https://github.com/MuRDoK-1982-)**
+# 🛡️ NetAudit-Suite
 
-![OSINT](https://img.shields.io/badge/Focus-OSINT%20%2F%20CTI-blue?style=for-the-badge&logo=spyderide)
-![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
+> **Suite de auditoría de red automatizada y modular.**
 
-A modular, auditable, and scalable ecosystem designed for early detection of high-impact risks in public Telegram groups. This platform combines advanced MTProto collection, multi-language rule engines, and AI-driven forensic analysis to provide actionable intelligence.
+NetAudit-Suite es un conjunto de herramientas diseñadas para **descubrir activos**, **identificar fabricantes** y **detectar vulnerabilidades (CVEs)** en redes locales. 
 
----
+Incluye versiones optimizadas para hardware de alto rendimiento (PC) y dispositivos IoT de bajo consumo (Raspberry Pi Zero), con integración directa a **Telegram** para reportes en tiempo real.
 
-## 🚀 Core Features
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20RPi-orange)
 
-### 📡 Hyper-Efficient Collection
-*   **Telethon (MTProto)**: High-performance listener for real-time monitoring of public groups and channels.
-*   **Privacy by Design**: Mandatory pseudonymization of all user handles using salted SHA-256 hashes.
-*   **Selective Acquisition**: Automatic downloading of media only when high-risk scores are detected.
+## 🚀 Módulos Incluidos
 
-### 🧠 Advanced Logic Engine
-*   **Multi-Language Support**: Specialized rule sets for **ES / EN / AR / RU / ZH / KO**.
-*   **Intelligence Normalizer**: Decodes *Arabizi* and *Leetspeak* to bypass common evasion techniques.
-*   **Obfuscation Detection**: Heuristic analysis for Base64, Hex, and high-entropy secret sharing.
-*   **Fuzzy Matching**: High-precision detection of typosquatted or slightly modified keywords.
+| Módulo | Ruta | Descripción | Hardware Recomendado |
+| :--- | :--- | :--- | :--- |
+| **Core Pro** | `core/audit_pro.py` | Escaneo multi-hilo agresivo. | PC / Laptop / RPi 4 |
+| **Lite IoT** | `lite/audit_pi.py` | Optimizado para bajo consumo y selección de interfaz. | Raspberry Pi Zero / Zero 2W |
 
-### 🕵️ Multi-Agent AI Orchestration
-*   **Agent A (Forensic Psychology)**: Detects radicalization patterns, coercion, and behavioral risk signals.
-*   **Agent B (Threat Intel)**: Evaluates hybrid threats, coordinated campaigns, and infrastructure sabotage.
-*   **Agent C (Strategy)**: Consolidates all findings into professional intelligence reports with TTP mapping.
+## 📦 Instalación
 
-### 📊 Professional Output
-*   **Automated PDF Reports**: Detailed executive summaries, risk metrics, and agent assessments.
-*   **Direct Alerts**: Secure SMTP delivery of high-risk intelligence cases.
-*   **Sherlock Integration**: Integrated OSINT lookup for cross-platform username presence.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/v1l4x/NetAudit-Suite.git](https://github.com/v1l4x/NetAudit-Suite.git)
+   cd NetAudit-Suite
+   ```
 
----
+2. **Instalar dependencias:**
+   ```bash
+    pip3 install -r requirements.txt
+    sudo apt install nmap
+   ```
+3. **Configuración (Opcional para Telegram):**
+   ```bash
+    mv config.py.example config.py
+    nano config.py
+    # Pega tu Token y Chat ID dentro
+   ```
 
-## 🏗️ Architecture
+## 🎮 Uso
 
-```mermaid
-graph TD
-    TC[Telegram Collector] -->|POST /ingest| API[FastAPI Orchestrator]
-    API -->|Async Task| CW[Celery Worker]
-    CW -->|Rule Engine| RE[Detection Engine]
-    RE -->|Score >= 12| AA[AI Analysis Agents]
-    AA -->|A / B / C| RG[Report Generator]
-    RG -->|PDF| EMAIL[SMTP Alert]
-    API -->|Metadata| DB[(PostgreSQL)]
-    API -->|Queue| RD[(Redis)]
-```
-
----
-
-## 🛠️ Quick Start
-
-### 1. Requirements
-Ensure you have **Docker** and **Docker Compose** installed.
-
-### 2. Configuration
-Create a `.env` file based on the provided `.env.example`:
+### Modo PC (Potencia Máxima):
 ```bash
-cp .env.example .env
-# Edit .env with your TG_API_ID, TG_API_HASH and OPENAI_API_KEY
+sudo python3 core/audit_pro.py
 ```
-
-### 3. Launch
+### Modo Raspberry Pi zero 2w (Portable):
 ```bash
-docker-compose up --build -d
+sudo python3 lite/audit_pi.py
 ```
+---
+
+## 📸 Galería del Proyecto
+
+<table align="center">
+  <tr>
+    <td align="center" width="45%">
+      <img src="Imagenes/Resultado.jpg" width="100%" alt="Terminal">
+      <br>
+      <sub>Ejecución en Terminal</sub>
+    </td>
+    <td align="center" width="25%">
+      <img src="Imagenes/Telegram.png" width="100%" alt="Telegram">
+      <br>
+      <sub>Reporte en Telegram</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="Imagenes/Carpetas.jpg" width="100%" alt="Estructura">
+      <br>
+      <sub>Entorno de Trabajo</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## ⚖️ Ethical Use & Compliance
-This system is designed for **defensive use cases**, law enforcement support, and corporate threat intelligence. It maintains immutable audit logs for every ingestion and analysis action to ensure operational accountability.
 
----
-
-## 👨‍💻 Author
-**MuRDoK-1982-**  
-*Senior OSINT/CTI Architect & Python Backend Engineer*
-
-*Disclaimer: This platform belongs to MuRDoK-1982-. Unauthorized distribution is strictly monitored.*
+**Disclaimer:** Herramienta creada con fines educativos y de auditoría ética. El autor no se hace responsable del mal uso.
